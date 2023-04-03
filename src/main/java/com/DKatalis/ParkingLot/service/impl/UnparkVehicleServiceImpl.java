@@ -12,24 +12,25 @@ import com.DKatalis.ParkingLot.dummyDAO.ParkingLotDAO;
 import com.DKatalis.ParkingLot.entity.VehicleEntity;
 import com.DKatalis.ParkingLot.service.UnParkVehicleService;
 
+import lombok.AllArgsConstructor;
+
 
 
 @Service("unparkVehicleService")
+@AllArgsConstructor
 public class UnparkVehicleServiceImpl implements UnParkVehicleService{
 
 	@Autowired
-	private ParkingLotDAO parkingLotDAO;
+	private final ParkingLotDAO parkingLotDAO;
 	@Autowired
-	private ChargesCalculatorService calculatorService;
+	private final ChargesCalculatorService calculatorService;
 	
 	@Override
 	public void unpark(UnParkDTO dto) {
 		
-		String vehicleNumber=dto.getVehicleNumber();
-		
-		
 		if(proceed(dto)) {
 		
+     	String vehicleNumber=dto.getVehicleNumber();
 		VehicleEntity deletedVehicle=parkingLotDAO.delete(vehicleNumber);
 		
 		long charges=calculatorService.calculate(dto.getDuration());
@@ -40,6 +41,12 @@ public class UnparkVehicleServiceImpl implements UnParkVehicleService{
 	
 
 	private boolean proceed(UnParkDTO dto) {
+		
+		if(Objects.isNull(dto)) {
+			System.out.println("Vehicle Number not valid");
+			return false;
+		}
+		
 		
 		String vehicleNumber=dto.getVehicleNumber();
 		if(Objects.isNull(vehicleNumber)) {

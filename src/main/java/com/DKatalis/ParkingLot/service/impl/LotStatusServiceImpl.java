@@ -11,12 +11,15 @@ import com.DKatalis.ParkingLot.dummyDAO.ParkingLotDAO;
 import com.DKatalis.ParkingLot.entity.VehicleEntity;
 import com.DKatalis.ParkingLot.service.ParkingLotStatusService;
 
+import lombok.AllArgsConstructor;
+
 
 @Service("lotStatusService")
+@AllArgsConstructor
 public class LotStatusServiceImpl implements ParkingLotStatusService{
 
 	@Autowired
-	private ParkingLotDAO parkingLotDAO;
+	private final ParkingLotDAO parkingLotDAO;
 	
 	@Override
 	public void status() {
