@@ -38,7 +38,9 @@ public class ParkingLotApplication implements CommandLineRunner{
 
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args){
+	
+		if(args.length!=0 && args[0]!=null) {
 		try (Stream<String> stream = Files.lines(Paths.get(args[0]), StandardCharsets.UTF_8)) {
 			
 			stream.forEach(line-> {
@@ -60,15 +62,16 @@ public class ParkingLotApplication implements CommandLineRunner{
 				if(splitText[0].equals(Operation.STATUS.getName())) {
 					parkingLotStatusService.status();
 				}
-				
-				
-				
 			});
 			
 			} catch (IOException e) {
-				
+				System.out.println(e.getMessage());
 			}
 		
 	}
-
+	else {
+	
+		 System.out.println("Please provide file path");
+	}
+}
 }

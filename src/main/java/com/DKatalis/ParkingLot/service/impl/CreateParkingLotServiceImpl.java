@@ -9,12 +9,15 @@ import org.springframework.stereotype.Component;
 import com.DKatalis.ParkingLot.dummyDAO.ParkingLotDAO;
 import com.DKatalis.ParkingLot.service.CreateParkingLotService;
 
+import lombok.AllArgsConstructor;
+
 
 @Component("createParkingLotService")
+@AllArgsConstructor
 public class CreateParkingLotServiceImpl implements CreateParkingLotService{
 
 	@Autowired
-	private ParkingLotDAO parkingLotDAO;
+	private final ParkingLotDAO parkingLotDAO;
 	
 	@Override
 	public void create(int parkingLotSize) {
@@ -29,7 +32,7 @@ public class CreateParkingLotServiceImpl implements CreateParkingLotService{
 		
 		parkingLotDAO.initliaze(parkingLotSize);
 		
-		System.out.println("Created parking lot with::"+parkingLotSize+" slots");
+		System.out.println("Created parking lot with::"+parkingLotDAO.getParkingLotSize()+" slots");
 		
 	
 	}
