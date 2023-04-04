@@ -3,22 +3,30 @@ package com.DKatalis.ParkingLot.dummyDAO.impl;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.DKatalis.ParkingLot.dummyDAO.ParkingLotDAO;
+import com.DKatalis.ParkingLot.dummyDB.VehicleParkingLotDB;
 import com.DKatalis.ParkingLot.entity.VehicleEntity;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class ParkingLotDAOImpl implements ParkingLotDAO {
 
+	@Autowired
+	private final VehicleParkingLotDB vehicleParkingLotDB;
 	
-	private VehicleEntity[] vehicles;
 	private int parkingLotSize=0;
 	private int noOfSoltsAlloted=0;
+
 	
 	@Override
 	public void initliaze(int parkingLotSize) {
-		vehicles=new VehicleEntity[parkingLotSize];
+		
+		vehicleParkingLotDB.initliaze(parkingLotSize);
 		this.parkingLotSize=parkingLotSize;
 	}
 
@@ -26,10 +34,10 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 	public VehicleEntity insert(String vehicleNumber) {
 		
 		VehicleEntity vehicleEntity = null;
-		
+		VehicleEntity[] vehicles=vehicleParkingLotDB.getVehicles();
 		for(int i=0;i<vehicles.length;i++) {
 			if(vehicles[i]== null) {
-				vehicleEntity= new VehicleEntity(i,vehicleNumber);
+				vehicleEntity= new VehicleEntity(i+1,vehicleNumber);
 				vehicles[i]=vehicleEntity;
 				noOfSoltsAlloted++;
 				break;
@@ -43,6 +51,7 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 	public VehicleEntity delete(String vehicleNumber) {
 
 		VehicleEntity vehicleEntity = null;
+		VehicleEntity[] vehicles=vehicleParkingLotDB.getVehicles();
 		for(int i=0;i<vehicles.length;i++) {
 			if(vehicles[i]!=null && vehicles[i].getNumber().equals(vehicleNumber)) {
 				vehicleEntity=vehicles[i];
@@ -58,8 +67,7 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 
 	@Override
 	public VehicleEntity[] fetchAll() {
-		
-		return this.vehicles;
+		return vehicleParkingLotDB.getVehicles();
 	}
 
 	@Override
@@ -74,7 +82,7 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 			return Optional.empty();
 		}
 		
-		
+		VehicleEntity[] vehicles=vehicleParkingLotDB.getVehicles();
 		for(int i=0;i<vehicles.length;i++) {
 			if(vehicles[i]!=null && vehicles[i].getNumber().equals(vehicleNumber)) {
 				return Optional.of(vehicles[i]);

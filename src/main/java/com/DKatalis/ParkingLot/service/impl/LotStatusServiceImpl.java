@@ -27,7 +27,7 @@ public class LotStatusServiceImpl implements ParkingLotStatusService{
 		VehicleEntity[] vehicles=parkingLotDAO.fetchAll();
 		System.out.println("Slot No. Registration No.");
 		
-		Stream.of(vehicles).filter(vehicle-> Objects.nonNull(vehicle)).forEach(vehicle-> System.out.println((vehicle.getAllotmentId()+1) +"     "+ vehicle.getNumber()));
+		Stream.of(vehicles).filter(vehicle-> Objects.nonNull(vehicle)).forEach(vehicle-> System.out.println(vehicle.getAllotmentId() +"     "+ vehicle.getNumber()));
 				
 	}
 

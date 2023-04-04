@@ -29,7 +29,7 @@ public class ParkNewVehicleServiceImpl implements ParkNewVehicleService{
 		
 		VehicleEntity newVehicle=parkingLotDAO.insert(vehicleNumber);
 		
-		System.out.println("Allocated slot number::"+(newVehicle.getAllotmentId()+1));
+		System.out.println("Allocated slot number::"+ newVehicle.getAllotmentId());
 		}
 	}
 	

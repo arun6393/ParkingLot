@@ -35,7 +35,7 @@ public class UnparkVehicleServiceImpl implements UnParkVehicleService{
 		
 		long charges=calculatorService.calculate(dto.getDuration());
 		
-		System.out.println("Registration Number "+vehicleNumber+" from Slot "+(deletedVehicle.getAllotmentId()+1)+" has left with Charge"+ charges);
+		System.out.println("Registration Number "+vehicleNumber+" from Slot "+deletedVehicle.getAllotmentId()+" has left with Charge"+ charges);
 		}
 	}
 	
