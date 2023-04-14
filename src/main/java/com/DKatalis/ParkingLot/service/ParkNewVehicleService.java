@@ -4,4 +4,5 @@ public interface ParkNewVehicleService {
 	
 	void park(String vehicleNumber);
 
+	void inputValidation(String[] operationArray);
 }

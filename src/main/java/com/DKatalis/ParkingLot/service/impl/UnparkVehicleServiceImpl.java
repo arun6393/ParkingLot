@@ -3,6 +3,7 @@ package com.DKatalis.ParkingLot.service.impl;
 import java.util.Objects;
 
 
+import com.DKatalis.ParkingLot.enums.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,14 @@ public class UnparkVehicleServiceImpl implements UnParkVehicleService{
 		System.out.println("Registration Number "+vehicleNumber+" from Slot "+deletedVehicle.getAllotmentId()+" has left with Charge"+ charges);
 		}
 	}
-	
+
+	@Override
+	public void inputValidation(String[] operationArray) {
+		if(Operation.LEAVE.getArraySize()!=operationArray.length){
+			throw new RuntimeException("Invalid Operation");
+		}
+	}
+
 
 	private boolean proceed(UnParkDTO dto) {
 		

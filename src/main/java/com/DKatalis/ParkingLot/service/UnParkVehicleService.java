@@ -6,4 +6,6 @@ public interface UnParkVehicleService {
 	
 	void unpark(UnParkDTO dto);
 
+	void inputValidation(String[] operationArray);
+
 }

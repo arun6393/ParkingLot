@@ -12,7 +12,7 @@ public class VehicleParkingLotDB {
 
 	private VehicleEntity[] vehicles;
 	
-	public void initliaze(int parkingLotSize) {
+	public void initialize(int parkingLotSize) {
 		vehicles=new VehicleEntity[parkingLotSize];
 	}
 	

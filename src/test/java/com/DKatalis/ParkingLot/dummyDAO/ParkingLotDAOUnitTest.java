@@ -32,11 +32,15 @@ public class ParkingLotDAOUnitTest {
 	
 	
 	@Test
-	public void PLDUT_01_initliaze_success() {
-		parkingLotDAO.initliaze(1);
-		assertThat(parkingLotDAO.getParkingLotSize()).isEqualTo(1);
+	public void PLDUT_01_initialize_success() {
+		parkingLotDAO.initialize(1);
+
+		when(vehicleParkingLotDB.getVehicles()).thenReturn(getVehiclesData());
+
+		assertThat(parkingLotDAO.getParkingLotSize()).isEqualTo(4);
 		
-		verify(vehicleParkingLotDB, times(1)).initliaze(anyInt());
+		verify(vehicleParkingLotDB, times(1)).initialize(anyInt());
+		verify(vehicleParkingLotDB, times(1)).getVehicles();
 		
 	}
 	
@@ -50,7 +54,7 @@ public class ParkingLotDAOUnitTest {
 		VehicleEntity vehicle=parkingLotDAO.insert("1");
 		
 		assertThat(vehicle.getAllotmentId()).isEqualTo(1);
-		assertThat(parkingLotDAO.getNoOfSlotsAlloted()).isEqualTo(1);
+		assertThat(parkingLotDAO.getNoOfSlotsAllotted()).isEqualTo(1);
 		assertThat(vehicles[0]).isNotNull();
 	}
 	

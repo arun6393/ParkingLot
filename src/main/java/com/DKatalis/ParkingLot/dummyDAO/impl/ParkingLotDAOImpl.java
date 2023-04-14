@@ -18,16 +18,13 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 
 	@Autowired
 	private final VehicleParkingLotDB vehicleParkingLotDB;
-	
-	private int parkingLotSize=0;
-	private int noOfSoltsAlloted=0;
+	private int noOfSlotsAllotted;
 
 	
 	@Override
-	public void initliaze(int parkingLotSize) {
+	public void initialize(int parkingLotSize) {
 		
-		vehicleParkingLotDB.initliaze(parkingLotSize);
-		this.parkingLotSize=parkingLotSize;
+		vehicleParkingLotDB.initialize(parkingLotSize);
 	}
 
 	@Override
@@ -39,7 +36,7 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 			if(vehicles[i]== null) {
 				vehicleEntity= new VehicleEntity(i+1,vehicleNumber);
 				vehicles[i]=vehicleEntity;
-				noOfSoltsAlloted++;
+				noOfSlotsAllotted++;
 				break;
 			}
 		}
@@ -56,7 +53,7 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 			if(vehicles[i]!=null && vehicles[i].getNumber().equals(vehicleNumber)) {
 				vehicleEntity=vehicles[i];
 				vehicles[i]=null;
-				noOfSoltsAlloted--;
+				noOfSlotsAllotted--;
 				break;
 			}
 		}
@@ -72,13 +69,15 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 
 	@Override
 	public int getParkingLotSize() {
-		return this.parkingLotSize;
+
+		VehicleEntity[] vehicles=vehicleParkingLotDB.getVehicles();
+		return vehicles == null ? 0 : vehicles.length;
 	}
 
 	@Override
 	public Optional<VehicleEntity> findOne(String vehicleNumber) {
 		
-		if(this.noOfSoltsAlloted==0) {
+		if(this.noOfSlotsAllotted ==0) {
 			return Optional.empty();
 		}
 		
@@ -93,13 +92,13 @@ public class ParkingLotDAOImpl implements ParkingLotDAO {
 	}
 
 	@Override
-	public int getNoOfSlotsAlloted() {
-		return this.noOfSoltsAlloted;
+	public int getNoOfSlotsAllotted() {
+		return this.noOfSlotsAllotted;
 	}
 
 	@Override
 	public boolean isParkingLotFull() {
-		return this.parkingLotSize==this.noOfSoltsAlloted;
+		return getParkingLotSize()==this.noOfSlotsAllotted;
 	}
 	
 	

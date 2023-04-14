@@ -66,7 +66,7 @@ public class CreateParkingLotServiceUnitTest {
 		}, RuntimeException.class);
 		
 		
-		assertThat(exception).hasMessage("Parking lot is already inialitized");
+		assertThat(exception).hasMessage("Parking lot is already initialized");
 		
 	}
 	

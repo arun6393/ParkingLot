@@ -46,20 +46,25 @@ public class ParkingLotApplication implements CommandLineRunner{
 			stream.forEach(line-> {
 				
 				String[] splitText=line.split(" ");
+				String operation=splitText[0];
 				
-				if(splitText[0].equals(Operation.CREATE.getName())) {
+				if(Operation.CREATE.getName().equals(operation)) {
+					createParkingLotService.inputValidation(splitText);
 					createParkingLotService.create(Integer.parseInt(splitText[1]));
 				}
 				
-				if(splitText[0].equals(Operation.PARK.getName())) {
+				if(Operation.PARK.getName().equals(operation)) {
+					parkNewVehicleServic.inputValidation(splitText);
 					parkNewVehicleServic.park(splitText[1]);
 				}
 				
-				if(splitText[0].equals(Operation.LEAVE.getName())) {
+				if(Operation.LEAVE.getName().equals(operation)) {
+					parkNewVehicleServic.inputValidation(splitText);
 					unParkVehicleService.unpark(new UnParkDTO(splitText[1],Integer.parseInt(splitText[2])));
 				}
 				
-				if(splitText[0].equals(Operation.STATUS.getName())) {
+				if(Operation.STATUS.getName().equals(operation)) {
+					parkNewVehicleServic.inputValidation(splitText);
 					parkingLotStatusService.status();
 				}
 			});

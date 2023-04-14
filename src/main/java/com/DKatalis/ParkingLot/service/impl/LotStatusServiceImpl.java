@@ -4,6 +4,7 @@ package com.DKatalis.ParkingLot.service.impl;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import com.DKatalis.ParkingLot.enums.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,15 @@ public class LotStatusServiceImpl implements ParkingLotStatusService{
 		
 		Stream.of(vehicles).filter(vehicle-> Objects.nonNull(vehicle)).forEach(vehicle-> System.out.println(vehicle.getAllotmentId() +"     "+ vehicle.getNumber()));
 				
+	}
+
+	@Override
+	public void inputValidation(String[] operationArray) {
+
+		if(Operation.STATUS.getArraySize()!=operationArray.length){
+			throw new RuntimeException("Invalid Operation");
+		}
+
 	}
 
 }

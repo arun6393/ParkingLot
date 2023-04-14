@@ -8,7 +8,7 @@ import com.DKatalis.ParkingLot.entity.VehicleEntity;
 public interface ParkingLotDAO {
 
 
-	void initliaze(int parkingLotSize);
+	void initialize(int parkingLotSize);
 	
 	VehicleEntity insert(String vehicleNumber);
 	
@@ -20,7 +20,7 @@ public interface ParkingLotDAO {
 	
 	Optional<VehicleEntity> findOne(String vehicleNumber);
 	
-	int getNoOfSlotsAlloted();
+	int getNoOfSlotsAllotted();
 	
 	boolean isParkingLotFull();
 	

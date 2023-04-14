@@ -3,6 +3,7 @@ package com.DKatalis.ParkingLot.service.impl;
 
 
 
+import com.DKatalis.ParkingLot.enums.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,20 +22,29 @@ public class CreateParkingLotServiceImpl implements CreateParkingLotService{
 	
 	@Override
 	public void create(int parkingLotSize) {
-		
-	
+
 		if(parkingLotSize<=0) {
 			throw new RuntimeException("Parking lot size cannot be 0 or negative");
 		}
 		if(parkingLotDAO.getParkingLotSize()!=0) {
-			throw new RuntimeException("Parking lot is already inialitized");
+			throw new RuntimeException("Parking lot is already initialized");
 		}
 		
-		parkingLotDAO.initliaze(parkingLotSize);
+		parkingLotDAO.initialize(parkingLotSize);
 		
 		System.out.println("Created parking lot with::"+parkingLotDAO.getParkingLotSize()+" slots");
 		
 	
+	}
+
+	@Override
+	public void inputValidation(String[] operationArray) {
+
+		if(Operation.CREATE.getArraySize()!=operationArray.length){
+			throw new RuntimeException("Invalid Operation");
+		}
+
+
 	}
 
 }

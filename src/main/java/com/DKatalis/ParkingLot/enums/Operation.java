@@ -2,19 +2,25 @@ package com.DKatalis.ParkingLot.enums;
 
 public enum Operation {
 	
-	CREATE("create"),
-	PARK("park"),
-	LEAVE("leave"),
-	STATUS("status");
+	CREATE("create",2),
+	PARK("park",2),
+	LEAVE("leave",3),
+	STATUS("status",1);
 
 	private final String name;
+	private final int arraySize;
 	
-	private Operation(String name) {
+	Operation(String name,int arraySize) {
 		this.name=name;
+		this.arraySize=arraySize;
 	}
 	
 	public String getName() {
 		return this.name;
+	}
+
+	public int getArraySize(){
+		return this.arraySize;
 	}
 
 }
