@@ -6,6 +6,4 @@ public interface ParkingLotStatusService {
 	
 	void status();
 
-	void inputValidation(String[] operationArray);
-
 }

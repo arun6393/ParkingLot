@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.DKatalis.ParkingLot.charges.service.ChargesCalculatorService;
+import com.DKatalis.ParkingLot.command.ParkingCommand;
 import com.DKatalis.ParkingLot.dto.UnParkDTO;
 import com.DKatalis.ParkingLot.dummyDAO.ParkingLotDAO;
 import com.DKatalis.ParkingLot.entity.VehicleEntity;
@@ -19,7 +20,7 @@ import lombok.AllArgsConstructor;
 
 @Service("unparkVehicleService")
 @AllArgsConstructor
-public class UnparkVehicleServiceImpl implements UnParkVehicleService{
+public class UnparkVehicleServiceImpl implements UnParkVehicleService,ParkingCommand{
 
 	@Autowired
 	private final ParkingLotDAO parkingLotDAO;
@@ -37,13 +38,6 @@ public class UnparkVehicleServiceImpl implements UnParkVehicleService{
 		long charges=calculatorService.calculate(dto.getDuration());
 		
 		System.out.println("Registration Number "+vehicleNumber+" from Slot "+deletedVehicle.getAllotmentId()+" has left with Charge"+ charges);
-		}
-	}
-
-	@Override
-	public void inputValidation(String[] operationArray) {
-		if(Operation.LEAVE.getArraySize()!=operationArray.length){
-			throw new RuntimeException("Invalid Operation");
 		}
 	}
 
@@ -69,6 +63,26 @@ public class UnparkVehicleServiceImpl implements UnParkVehicleService{
 		
 		
 		return true;
+	}
+	
+	@Override
+	public boolean isValidCommand(String[] command) {
+		
+		if(Operation.LEAVE.getName().equalsIgnoreCase(command[0])){
+			if(Operation.LEAVE.getArraySize()!=command.length){
+				System.out.println("Invalid UNPARK command ");
+				return false;
+			}
+			return true;
+		}
+		return false;
+
+	}
+
+	@Override
+	public void process(String[] command) {
+		unpark(new UnParkDTO(command[1],Integer.parseInt(command[2])));
+
 	}
 
 }

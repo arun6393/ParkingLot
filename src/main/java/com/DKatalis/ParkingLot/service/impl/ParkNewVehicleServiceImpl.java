@@ -7,6 +7,7 @@ import com.DKatalis.ParkingLot.enums.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.DKatalis.ParkingLot.command.ParkingCommand;
 import com.DKatalis.ParkingLot.dummyDAO.ParkingLotDAO;
 import com.DKatalis.ParkingLot.entity.VehicleEntity;
 import com.DKatalis.ParkingLot.service.ParkNewVehicleService;
@@ -17,7 +18,7 @@ import lombok.AllArgsConstructor;
 
 @Service("parkNewVehicleService")
 @AllArgsConstructor
-public class ParkNewVehicleServiceImpl implements ParkNewVehicleService{
+public class ParkNewVehicleServiceImpl implements ParkNewVehicleService,ParkingCommand{
 
 	@Autowired
 	private final ParkingLotDAO parkingLotDAO;
@@ -33,15 +34,6 @@ public class ParkNewVehicleServiceImpl implements ParkNewVehicleService{
 		System.out.println("Allocated slot number::"+ newVehicle.getAllotmentId());
 		}
 	}
-
-	@Override
-	public void inputValidation(String[] operationArray) {
-
-		if(Operation.PARK.getArraySize()!=operationArray.length){
-			throw new RuntimeException("Invalid Operation");
-		}
-	}
-
 
 	private boolean proceed(String vehicleNumber) {
 		
@@ -63,6 +55,25 @@ public class ParkNewVehicleServiceImpl implements ParkNewVehicleService{
 		
 		
 		return true;
+	}
+	
+	@Override
+	public boolean isValidCommand(String[] command) {
+		
+		if(Operation.PARK.getName().equalsIgnoreCase(command[0])){
+			if(Operation.PARK.getArraySize()!=command.length){
+				System.out.println("Invalid PARK command ");
+				return false;
+			}
+			return true;
+		}
+		return false;
+
+	}
+
+	@Override
+	public void process(String[] command) {
+		park(command[1]);
 	}
 
 }

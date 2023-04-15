@@ -6,6 +6,4 @@ public interface CreateParkingLotService {
 	
 	void create(int parkingLotSize);
 
-	void inputValidation(String[] operationArray);
-
 }
