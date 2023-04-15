@@ -59,12 +59,12 @@ public class ParkingLotApplication implements CommandLineRunner{
 				}
 				
 				if(Operation.LEAVE.getName().equals(operation)) {
-					parkNewVehicleServic.inputValidation(splitText);
+					unParkVehicleService.inputValidation(splitText);
 					unParkVehicleService.unpark(new UnParkDTO(splitText[1],Integer.parseInt(splitText[2])));
 				}
 				
 				if(Operation.STATUS.getName().equals(operation)) {
-					parkNewVehicleServic.inputValidation(splitText);
+					parkingLotStatusService.inputValidation(splitText);
 					parkingLotStatusService.status();
 				}
 			});
